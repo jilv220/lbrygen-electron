@@ -1,6 +1,6 @@
 import Search from '../components/SearchView.vue'
 import Stream from '../components/StreamView.vue'
-import { createRouter, createWebHashHistory } from '@ionic/vue-router';
+import { createRouter, createWebHashHistory } from 'vue-router';
 
 const routes = [
   {

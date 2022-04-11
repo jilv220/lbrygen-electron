@@ -20,7 +20,8 @@ module.exports = {
       'dark': '#121212',
       'gray-dark': '#273444',
       'gray': '#242424',
-      'gray-light': '#d3dce6',
+      'gray-light': '#27272a',
+      'gray-white':'#52525b'
     },
     extend: {},
   },

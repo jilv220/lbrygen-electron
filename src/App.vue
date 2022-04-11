@@ -6,10 +6,9 @@
         <input id="my-drawer" class="drawer-toggle" type="checkbox">
         <div class="drawer-content">
           <!-- Page content here -->
-          <div class="navbar sticky">
+          <div id="navbar" class="navbar sticky shadow">
 
             <div class="navbar-start">
-              <!-- <label for="my-drawer" class="btn btn-primary drawer-button">Open drawer</label> -->
               <label for="my-drawer" class="mr-6">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                   stroke="currentColor" stroke-width="2">
@@ -46,6 +45,7 @@
 
           </div>
 
+          <!-- Router -->
           <router-view v-slot="{ Component }">
             <keep-alive>
               <component :is="Component" :key="$route.fullPath" />
@@ -54,10 +54,10 @@
 
         </div>
 
-        <!-- Drawer -->
+        <!-- Drawer Content -->
         <div class="drawer-side">
           <label for="my-drawer" class="drawer-overlay"></label>
-          <ul class="menu p-4 overflow-y-auto w-80 bg-gray text-base-content">
+          <ul id="drawer-sidebar" class="menu p-4 overflow-y-auto w-80 text-base-content">
             <!-- Sidebar content here -->
             <li @click="navigateToSearchView()">
               <div class="active:bg-green">
@@ -91,16 +91,10 @@
 
 <script>
 import EventService from "./services/EventService.js"
-import {
-  IonApp,
-  IonContent,
-} from "@ionic/vue";
-
 export default {
   name: "App",
   components: {
-    IonApp,
-    IonContent,
+
   },
   data() {
     return {
@@ -163,9 +157,11 @@ export default {
 </script>
 
 <style>
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+
+/* temporary splash fix */
+body {
+  display: grid !important;
+}
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -178,23 +174,16 @@ export default {
 
 [data-theme="dark"] #app {
   @apply text-white;
-  @apply bg-gray;
+  @apply bg-black;
 }
 
-ion-button {
-  cursor: pointer;
+#navbar, #drawer-sidebar {
+    @apply bg-white
 }
 
-[data-theme="dark"]ion-input {
-  text-align: start;
-  border: 1px solid #242424;
-  border-radius: 4px;
-}
-
-ion-input {
-  text-align: start;
-  border: 1px solid black;
-  border-radius: 4px;
+[data-theme="dark"] #navbar,
+[data-theme="dark"] #drawer-sidebar  {
+    @apply bg-gray-light;
 }
 
 .fancy-spinner {
