@@ -10,7 +10,11 @@
         >
         </ion-input>
         </ion-toolbar>
-        <ion-button @click="resetPage(); searchContent(searchType, streamType, this.currPage);">Search</ion-button>
+
+        <button class="btn bg-green text-white hover:bg-green" 
+                @click="resetPage(); searchContent(searchType, streamType, this.currPage);">
+                Search
+        </button>
     </div>
 
     <div id="filter-area" class="pt-04 pb-06 flex-x ion-justify-content-center">
@@ -78,9 +82,9 @@
     <div v-if="sourceData!=''">
         <p> {{ this.currPage }} </p>
         <p class="flex-x-center"> 
-            <ion-button @click="resetPage(); searchContent(searchType, streamType, this.currPage);">First</ion-button>
-            <ion-button @click="prevPage()">Prev</ion-button>
-            <ion-button @click="nextPage()">Next</ion-button>
+            <button class="btn bg-green hover:bg-green" @click="resetPage(); searchContent(searchType, streamType, this.currPage);">First</button>
+            <button class="btn bg-green hover:bg-green" @click="prevPage()">Prev</button>
+            <button class="btn bg-green hover:bg-green" @click="nextPage()">Next</button>
         </p>
     </div>
 
@@ -91,7 +95,6 @@
 import EventService from "../services/EventService.js"
 import Normalizer from '../utils/Normalizer.js'
 import { 
-  IonButton,
   IonImg,
   IonItem, 
   IonList,
@@ -103,7 +106,6 @@ import {
 
 export default {
   components: {
-      IonButton,
       IonImg,
       IonItem, 
       IonList,
@@ -181,7 +183,7 @@ hr {
     border-width: thin !important;
 }
 
-ion-button {
+button {
     cursor: pointer;
 }
 
