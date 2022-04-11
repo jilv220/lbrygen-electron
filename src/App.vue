@@ -1,7 +1,6 @@
 <template>
-  <ion-app v-if="this.isLbryReady">
-    <header class="ion-no-border"> </header>
-    <ion-content>
+  <div v-if="this.isLbryReady">
+    <div>
       <!-- drawer -->
       <div class="drawer">
         <input id="my-drawer" class="drawer-toggle" type="checkbox">
@@ -61,7 +60,7 @@
           <ul class="menu p-4 overflow-y-auto w-80 bg-gray text-base-content">
             <!-- Sidebar content here -->
             <li @click="navigateToSearchView()">
-              <div class="active:bg-green text-white">
+              <div class="active:bg-green">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                   stroke="currentColor" stroke-width="2">
                   <path stroke-linecap="round" stroke-linejoin="round"
@@ -75,8 +74,8 @@
 
       </div>
 
-    </ion-content>
-  </ion-app>
+    </div>
+  </div>
 
   <!-- Splash Screen -->
   <div v-else class="flex-y-center">
@@ -164,33 +163,22 @@ export default {
 </script>
 
 <style>
-
-[data-theme="dark"]:root {
-  /* dark theme colors */
-  --ion-background-color: #121212;
-  --ion-text-color: #ffffff;
-  --ion-item-border-color: #ffffff;
-  --ion-placeholder-color: #ffffff;
-  --ion-border-color: #1f1f22;
-  --ion-toolbar-background: #1f1f22;
-}
-
-:root {
-  /* light theme colors */
-  --ion-background-color: #ffffff;
-  --ion-text-color: #1f1f22;
-  --ion-item-border-color: #1f1f22;
-  --ion-placeholder-color: #1f1f22;
-  --ion-border-color: #1f1f22;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  margin: 4rem;
+  @apply text-black;
+  @apply bg-white;
+}
+
+[data-theme="dark"] #app {
+  @apply text-white;
+  @apply bg-gray;
 }
 
 ion-button {
