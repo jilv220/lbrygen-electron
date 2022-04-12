@@ -1,4 +1,5 @@
 import axios from "axios"
+var qs = require('qs');
 
 const base_api = 'http://localhost:5000/api'
 export default {
@@ -13,25 +14,47 @@ export default {
     return res.data;
   },
 
-  async getContent(type, streamType, content, pageNum = 1) {
+  async getContent(type, streamType, content, pageNum = 1, pageSize = 20) {
 
     let queryType = ''
 
-    switch (type) {
-      case "tag":
-        queryType = 't'
-        break
-      case "text":
-        queryType = 'q'
-        break
-      case "channel":
-        queryType = 'c'
-        break
+    //console.log(content)
+
+    let params = { 
+      p: pageNum, 
+      ps: pageSize, 
+      st: streamType,
     }
 
-    let params = { p: pageNum, st: streamType}
+    if (Array.isArray(content)) {
+      params['t'] = content
+    } else {
 
-    let res = await axios.get(`${base_api}/search?${queryType}=${content}`, { params: params } )
+      switch (type) {
+        case "tag":
+          queryType = 't'
+          break
+        case "text":
+          queryType = 'q'
+          break
+        case "channel":
+          queryType = 'c'
+          break
+      }
+      params[queryType] = content
+    }
+
+    // Insert some kind of trending algorithm
+
+    let res = 
+    await axios.get( `${base_api}/search`,
+    { 
+        params: params,
+        paramsSerializer: params => {
+          return qs.stringify(params)
+        }
+    })
+
     return res.data 
   },
 

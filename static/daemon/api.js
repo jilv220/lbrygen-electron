@@ -9,7 +9,7 @@ const port = 5000;
 const base = 'http://localhost'
 const lbryPort = 5279
 const lbryUrl = `${base}:${lbryPort}`
-const pageSize = 20
+const PAGE_SIZE = 20
 
 function apiCall(params) {
 
@@ -47,18 +47,31 @@ app.get('/api/search', (req, res) => {
 
     let tag = req.query.t 
     let text = req.query.q
-    let pageNum = req.query.p
-    let streamType = req.query.st
     let channel = req.query.c
 
+    let pageNum = req.query.p
+    let pageSize = req.query.ps
+    let streamType = req.query.st
+
+    console.log(tag)
+
     let params = { method : 'claim_search',
-                   params : { any_tags : [ tag === undefined ? undefined : tag], 
-                              text : text === undefined ? undefined : text,
+                   params : { text : text === undefined ? undefined : text,
                               page : pageNum === undefined ? 1 : Number(pageNum),
-                              page_size : pageSize,
+                              page_size : pageSize == undefined ? PAGE_SIZE : Number(pageSize),
                               stream_type : [ streamType == undefined ? 'video' : streamType ],
                               order_by : 'release_time',
                               no_totals : true }}
+    
+    // support both string and array
+    if ( tag !== undefined) {
+
+        if (typeof tag == "string") {
+            params["params"]["any_tags"] = [ tag ]
+        } else {
+            params["params"]["any_tags"] = tag
+        }
+    }
 
     if ( channel !== undefined ) {
         params["params"]["channel"] = channel
@@ -92,7 +105,7 @@ app.get('/api/getStream', (req, res) => {
     apiCall(params)
     .then((daemonRes) => {
         //console.log(daemonRes)
-        res.send(daemonRes.result.streaming_url)
+        res.send(daemonRes.result)
     })
 })
 

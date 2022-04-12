@@ -11,7 +11,7 @@
             </button>
         </div>
 
-        <div id="filter-area" class="pb-6 flex-x ion-justify-content-center">
+        <div id="filter-area" class="pb-6 flex-x-center">
 
             <form id="stream-filter" autocomplete="off">
                 <label class="pl-02 pr-06">Filter by : </label>
@@ -42,32 +42,24 @@
         </div>
 
         <div v-if="sourceData != ''">
-            <li v-for="item in sourceData.result.items" :key="item" lines="none">
-                <div class="flex-x">
-
-                    <div class="avatar">
-                        <div id="thumbnail" class="rounded">
-                            <img v-if="item.value.thumbnail" :src="item.value.thumbnail.url">
-                        </div>
-                    </div>
-
-                    <label id="streaming-url" class=""  @click="getStream(item.short_url)">
+            <li v-for="item in sourceData.result.items" :key="item">
+                <SearchItem :thumbnail="item.value.thumbnail" 
+                            :streamUrl="item.short_url">
+                    <template v-slot:center>
                         {{ item.name }}
-                    </label>
+                    </template>
+                    <template v-slot:rear>
 
-                    <div id="search-result-rear">
-                        <label v-if="item.value.source" class="ion-text-right">
+                        <label v-if="item.value.source">
                             {{ item.value.source.media_type }}
-
                         </label>
 
                         <text v-else id="text-unknown">
                             unknown
                         </text>
-                    </div>
-
-                </div>
-                <div class="divider"></div>
+                        
+                    </template>
+                </SearchItem>
             </li>
         </div>
 
@@ -76,9 +68,9 @@
             <p> {{ this.currPage }} </p>
             <p class="flex-x-center">
                 <button class="btn bg-green hover:bg-green"
-                    @click="resetPage(); searchContent(searchType, streamType, this.currPage); toTop()">First</button>
-                <button class="btn bg-green hover:bg-green" @click="prevPage(); toTop()">Prev</button>
-                <button class="btn bg-green hover:bg-green" @click="nextPage(); toTop()">Next</button>
+                    @click="resetPage(); searchContent(searchType, streamType, this.currPage);">First</button>
+                <button class="btn bg-green hover:bg-green" @click="prevPage()">Prev</button>
+                <button class="btn bg-green hover:bg-green" @click="nextPage()">Next</button>
             </p>
         </div>
   </div>
@@ -87,10 +79,11 @@
 <script>
 import EventService from "../services/EventService.js"
 import Normalizer from '../utils/Normalizer.js'
+import SearchItem from '@/components/SearchItem.vue'
 
 export default {
     components: {
-
+        SearchItem
     },
     data() {
         return {
@@ -119,28 +112,6 @@ export default {
                 }
             })
         },
-        async getStream(url) {
-            EventService.getStreamByUrl(url).then((response) => {
-
-                this.$router.push({ path: '/stream', query: { st: response } })
-
-            })
-        },
-        async download(url) {
-            EventService.downloadFromStream(url).then(() => {
-
-                let filename = url.replace('lbry://', '')
-                alert(`File ${filename} saved to Downloads folder !`)
-
-            })
-        },
-        toTop() {
-            
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            })
-       },
         prevPage() {
             if (this.currPage > 1) {
                 this.currPage -= 1
@@ -199,10 +170,6 @@ button {
     margin-bottom: 12px;
 }
 
-#streaming-url {
-    cursor: pointer;
-}
-
 #search-filter {
     margin-right: auto;
 }
@@ -215,17 +182,8 @@ button {
     align-content: center;
 }
 
-#search-result-rear {
-    align-content: center;
-}
-
 #text-unknown {
     padding-right: 10px;
-}
-
-#thumbnail {
-    width: 200px;
-    height: 100px;
 }
 
 @media (max-width: 900px) {

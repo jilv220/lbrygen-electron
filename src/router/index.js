@@ -1,6 +1,7 @@
-import Search from '../components/SearchView.vue'
-import Stream from '../components/StreamView.vue'
 import { createRouter, createWebHashHistory } from 'vue-router';
+
+const Search = () => import('../components/SearchView.vue')
+const Stream = () => import('../components/StreamView.vue')
 
 const routes = [
   {
@@ -10,8 +11,13 @@ const routes = [
   },
   {
     path: '/stream',
+    name: 'stream',
     component: Stream,
-    props: route => ({ stream: route.query.st })
+    props: route => ({ 
+      streamUrl: route.query.url, 
+      description: route.params.description,
+      tags:route.params.tags
+    })
   }
 ]
 
