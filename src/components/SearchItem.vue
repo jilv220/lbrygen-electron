@@ -20,26 +20,25 @@
 </template>
 
 <script>
-import EventService from "../services/EventService.js"
+import { useStreamStore } from "@/stores/StreamStore.js";
 export default {
     props: {
         thumbnail: Object,
         streamUrl: String
     },
+    setup() {
+        const stream = useStreamStore()
+        return { getStreamUrl: stream.getStreamUrl, requestStream : stream.requestStream}
+    },
     methods: {
          async getStream(url) {
-            EventService.getStreamByUrl(url).then((response) => {
 
-                //console.log(response)
+            this.requestStream(url).then (() => {
+
                 this.$router.push({ 
                     name: 'stream', 
-                    query: { url: response.streaming_url },
-                    params: { 
-                        description: response.metadata.description,
-                        tags : response.metadata.tags
-                    } 
+                    query: { url:  this.getStreamUrl}
                 })
-
             })
         },
     }

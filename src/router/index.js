@@ -13,11 +13,7 @@ const routes = [
     path: '/stream',
     name: 'stream',
     component: Stream,
-    props: route => ({ 
-      streamUrl: route.query.url, 
-      description: route.params.description,
-      tags:route.params.tags
-    })
+    props: route => ({ streamUrl: route.query.url })
   }
 ]
 

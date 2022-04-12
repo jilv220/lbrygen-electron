@@ -6,11 +6,11 @@
 
                 <div id="container" class="grid grid-rows-9 col-span-2">
 
-                    <iframe allowfullscreen webkitallowfullscreen :src="this.streamUrl" frameborder="0">
+                    <iframe allowfullscreen webkitallowfullscreen :src="stream.getStreamUrl" frameborder="0">
                     </iframe>
 
                     <div>
-                        {{ this.$route.params.description }}
+                        {{ stream.getStreamDesc }}
                     </div>
 
                 </div>
@@ -36,7 +36,9 @@
 
 <script>
 import EventService from "../services/EventService.js"
+import { useStreamStore } from "@/stores/StreamStore.js"
 import SearchItem from '@/components/SearchItem.vue'
+
 export default {
     props: {
         streamUrl: String,
@@ -44,23 +46,21 @@ export default {
     components: {
         SearchItem
     },
+    setup() {
+        const stream = useStreamStore()
+        return { stream }
+    },
     data() {
         return {
             sourceData: "",
-            tags: [""]
         }
     },
     mounted() {
-        // console.log(this.streamUrl)
-        // console.log (this.$route.params)
 
-        this.tags = Object.values(this.$route.params.tags)
-        this.searchContent('tag','video', 1, 20)
-    },
-    methods: {
-        async searchContent(searchType, streamType, pageNum, pageSize) {
+        this.stream.$subscribe((mutation, state) => {
 
-            EventService.getContent(searchType, streamType, this.tags, pageNum, pageSize).then((response) => {
+            //console.log(state.stream.tags)
+            EventService.getContent('tag', 'video', state.stream.tags).then((response) => {
 
                 //console.log(response)
                 if (response.error !== undefined) {
@@ -69,7 +69,7 @@ export default {
                     this.sourceData = response
                 }
             })
-        },
+        })
     }
 }
 </script>
