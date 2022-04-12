@@ -53,7 +53,7 @@ app.get('/api/search', (req, res) => {
     let pageSize = req.query.ps
     let streamType = req.query.st
 
-    console.log(tag)
+    // console.log(tag)
 
     let params = { method : 'claim_search',
                    params : { text : text === undefined ? undefined : text,

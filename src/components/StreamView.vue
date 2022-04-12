@@ -4,7 +4,7 @@
 
             <div class="grid grid-cols-3 gap-8 mt-4 px-4">
 
-                <div id="container" class="grid grid-rows-9 col-span-2 h-96">
+                <div id="container" class="grid grid-rows-9 col-span-2">
 
                     <iframe allowfullscreen webkitallowfullscreen :src="this.streamUrl" frameborder="0">
                     </iframe>
@@ -79,6 +79,10 @@ iframe {
     width: 100%;
     height: 100%;
     padding: 0 0 0.75rem 0;
+}
+
+#container {
+    height: 72rem;
 }
 
 #content-wrapper {
