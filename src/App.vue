@@ -2,11 +2,11 @@
   <div v-if="this.isLbryReady">
     <div>
       <!-- drawer -->
-      <div class="drawer">
+      <div class="drawer h-auto">
         <input id="my-drawer" class="drawer-toggle" type="checkbox">
         <div class="drawer-content">
           <!-- Page content here -->
-          <div id="navbar" class="navbar sticky shadow">
+          <div id="navbar" class="navbar fixed shadow z-50">
 
             <div class="navbar-start">
               <label for="my-drawer" class="mr-6">

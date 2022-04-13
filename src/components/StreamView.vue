@@ -9,7 +9,7 @@
                     <iframe allowfullscreen webkitallowfullscreen :src="stream.getStreamUrl" frameborder="0">
                     </iframe>
 
-                    <div>
+                    <div id="desc">
                         {{ stream.getStreamDesc }}
                     </div>
 
@@ -57,6 +57,9 @@ export default {
     },
     mounted() {
 
+        window.frames[0].stop()
+        document.getElementById('desc').innerHTML = ''
+
         this.stream.$subscribe((mutation, state) => {
 
             // Make sure only request once
@@ -92,5 +95,10 @@ iframe {
     position: relative;
     width: 100%;
     height: 100%;
+    padding-top: 4rem;
+}
+
+#desc {
+    padding-bottom: 20rem;
 }
 </style>

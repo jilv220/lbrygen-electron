@@ -1,5 +1,5 @@
 <template>
-    <div class="flex-x pt-4">
+    <div class="flex-x">
 
         <div class="avatar">
             <div id="thumbnail" class="rounded">
@@ -18,7 +18,7 @@
         </div>
 
     </div>
-    <div class="divider h-0"></div>
+    <div class="divider h-0 pb-4"></div>
 </template>
 
 <script>
@@ -56,7 +56,9 @@ export default {
 }
 
 #streaming-url-wrapper {
+    padding: 0 0 0 100px;
     width: 300px;
+    text-align: start;
 }
 
 #thumbnail {

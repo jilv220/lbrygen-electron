@@ -1,6 +1,6 @@
 <template>
     <div id="content" class="mx-10">
-        <div id="search-bar" ref="search-bar" class="flex-x-center fit-content pt-6 pb-3">
+        <div id="search-bar" ref="search-bar" class="flex-x-center fit-content pt-6 pb-3 mt-14">
             <input id="input-bar" class="input w-full flex-1 mr-3 focus:outline-green" type="text" v-model="search"
                 placeholder="Search some contents..."
                 @keyup.enter="resetPage(); searchContent(searchType, search, streamType, currPage);">
