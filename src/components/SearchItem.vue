@@ -34,6 +34,7 @@ export default {
     },
     methods: {
          async getStream(url) {
+            window.scrollTo(0,0)
             this.stream.requestStream(url).then (() => {
 
                 this.$router.push({ 

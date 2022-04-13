@@ -55,7 +55,7 @@
         </div>
 
         <!-- Drawer Content -->
-        <div class="drawer-side">
+        <div class="drawer-side h-screen">
           <label for="my-drawer" class="drawer-overlay"></label>
           <ul id="drawer-sidebar" class="menu p-4 overflow-y-auto w-80 text-base-content">
             <!-- Sidebar content here -->

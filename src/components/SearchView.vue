@@ -118,6 +118,7 @@ export default {
     methods: {
         async searchContent(searchType, searchContent, streamType, pageNum) {
 
+            window.scrollTo(0,0)
             let normalizedSearch = Normalizer.run(searchContent, searchType)
 
             EventService.getContent(searchType, streamType, normalizedSearch, pageNum).then((response) => {
