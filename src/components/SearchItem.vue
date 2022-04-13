@@ -18,7 +18,7 @@
         </div>
 
     </div>
-    <div class="divider h-0 pb-4"></div>
+    <div class="divider h-0"></div>
 </template>
 
 <script>

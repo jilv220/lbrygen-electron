@@ -4,6 +4,7 @@ import EventService from "../services/EventService.js"
 let streamModel = {
     url: '',
     desc: '',
+    title: '',
     tags: ['']
 }
 
@@ -16,6 +17,7 @@ export const useStreamStore = defineStore (
         getters: {
             getStreamUrl: (state) => state.stream.url,
             getStreamDesc: (state) => state.stream.desc,
+            getStreamTitle: (state) => state.stream.title,
             getStreamTags: (state) => state.stream.tags 
         },
         actions: {
@@ -28,6 +30,9 @@ export const useStreamStore = defineStore (
                         
                         if (response.metadata.description !== undefined) {
                             this.stream.desc = response.metadata.description
+                        }
+                        if (response.metadata.title !== undefined) {
+                            this.stream.title = response.metadata.title
                         }
                         if (response.metadata.tags !== undefined) {
                             this.stream.tags = Object.values(response.metadata.tags)

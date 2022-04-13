@@ -2,20 +2,30 @@
     <div>
         <div id="content-wrapper" class="">
 
-            <div class="grid grid-cols-3 gap-8 mt-4 px-4">
+            <div v-if="sourceData!=''" id="layout" class="grid grid-cols-3 gap-8 mt-4 px-4">
 
                 <div id="container" class="grid grid-rows-9 col-span-2">
-
                     <iframe allowfullscreen webkitallowfullscreen :src="stream.getStreamUrl" frameborder="0">
                     </iframe>
 
-                    <div id="desc">
-                        {{ stream.getStreamDesc }}
-                    </div>
+                    <div id="stream-info" >
 
+                        <h1 id="stream-title">
+                            {{ title }}
+                        </h1>
+
+                        <div id="stream-info-divider" class="divider h-0"></div>
+
+                        <div id="stream-desc">
+                            <li v-for="(line, index) in descList" :key="index">
+                                <p> {{ line }} </p>
+                            </li>
+                        </div>
+
+                    </div>
                 </div>
 
-                <div v-if="sourceData!=''" id="related-videos"  class="card flex-1">
+                <div id="related-videos"  class="card flex-1">
                     <li v-for="item in sourceData.result.items" :key="item">
                         <SearchItem 
                             :thumbnail="item.value.thumbnail" 
@@ -27,6 +37,14 @@
                     </li>
                 </div>
 
+            </div>
+
+            <div v-else id="stream-loading"  class="flex-y-center">
+                <div class="fancy-spinner">
+                    <div class="ring"></div>
+                    <div class="ring"></div>
+                    <div class="dot"></div>
+                </div>  
             </div>
 
         </div>
@@ -52,15 +70,20 @@ export default {
     },
     data() {
         return {
-            sourceData: "",
+            sourceData: '',
+            title: '',
+            descList: ['']
         }
     },
     mounted() {
 
-        window.frames[0].stop()
-        document.getElementById('desc').innerHTML = ''
+        //window.frames[0].stop()
 
+        // Only load to template when mutation happens
         this.stream.$subscribe((mutation, state) => {
+
+            this.title = this.stream.getStreamTitle
+            this.descList = this.stream.getStreamDesc.split('\n')
 
             // Make sure only request once
             if (mutation.storeId == 'stream' && this.sourceData == '') {
@@ -81,14 +104,51 @@ export default {
 </script>
 
 <style>
+p {
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+}
+
 iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    padding: 0 0 0.75rem 0;
+    max-height: 30%;
+}
+
+@media (max-height: 768px) {
+
+    iframe {
+        max-height: 22.5%;
+    }
+}
+
+/* md screen */
+@media (min-width: 768px) and (max-width: 1150px) {
+
+    #content-wrapper {
+        @apply p-6
+    }
+
+    #layout {
+        display: unset
+    }
+
+    iframe {
+        max-height: 39%
+    }
+
+    #stream-info {
+        padding-top: 9rem
+    }
 }
 
 #container {
-    height: 72rem;
+    position: relative;
+    padding-top: 50%;
 }
 
 #content-wrapper {
@@ -98,7 +158,34 @@ iframe {
     padding-top: 4rem;
 }
 
-#desc {
-    padding-bottom: 20rem;
+#stream-loading {
+    padding-top: 17.5%;
+}
+
+#stream-loading .fancy-spinner div.ring {
+    border-width: 2rem;
+    width: 20rem;
+    height: 20rem;
+    box-shadow: none;
+}
+
+#stream-info {
+    padding-top: 7rem;
+    text-align: start;
+}
+
+#stream-info-divider {
+    @apply my-3
+}
+
+#stream-title {
+    display: block;
+    align-items: center;
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+#stream-desc {
+    max-width: 50em;
 }
 </style>

@@ -200,6 +200,7 @@ export default {
   border-width: 0.5rem;
   border-style: solid;
   border-color: transparent;
+  box-shadow: none;
   -webkit-animation: 2s fancy infinite alternate;
   animation: 2s fancy infinite alternate;
 }

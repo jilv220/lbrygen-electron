@@ -148,7 +148,9 @@ export default {
             this.resetPage()
             this.searchContent('tag', tag, 'video', this.currPage)
             .then(() => {
+                this.searchType = "tag"
                 this.search = tag
+                this.streamType = "video"
             })
         }
     },
