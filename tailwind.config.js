@@ -16,6 +16,7 @@ module.exports = {
       'green-800': '#59a791',
       'yellow': '#ffc82c',
       'white': '#ffffff',
+      'white-sub' : '#e3e3e3',
       'black': '#1f1f22',
       'dark': '#121212',
       'gray-dark': '#273444',

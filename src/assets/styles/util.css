@@ -138,8 +138,8 @@
 
 /* tailwind override */
 :root, [data-theme] {
-    @apply bg-black !important
-  }
+    @apply bg-black !important;
+}
   
 .navbar {
     padding: 10px !important;

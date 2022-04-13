@@ -14,7 +14,7 @@ export default {
     return res.data;
   },
 
-  async getContent(type, streamType, content, pageNum = 1, pageSize = 20) {
+  async getContent(type, streamType, content, pageNum = 1, pageSize = 18) {
 
     let queryType = ''
 
@@ -27,7 +27,13 @@ export default {
     }
 
     if (Array.isArray(content)) {
-      params['t'] = content
+
+      if (content.length > 5) {
+        params['t'] = content.slice(0,6)
+      } else {
+        params['t'] = content
+      }
+
     } else {
 
       switch (type) {

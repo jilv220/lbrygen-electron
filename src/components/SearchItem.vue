@@ -1,5 +1,5 @@
 <template>
-    <div class="flex-x">
+    <div class="flex-x pt-4">
 
         <div class="avatar">
             <div id="thumbnail" class="rounded">
@@ -7,16 +7,18 @@
             </div>
         </div>
 
-        <label id="streaming-url" @click="getStream(streamUrl)">
-            <slot name="center"></slot>
-        </label>
+        <div id="streaming-url-wrapper" class="flex-1">
+            <label id="streaming-url" @click="getStream(streamUrl)">
+                <slot name="center"></slot>
+            </label>
+        </div>
 
-        <div id="search-result-rear">
+        <div id="search-result-rear" class="grid grid-rows-6">
             <slot name="rear"></slot>
         </div>
 
     </div>
-    <div class="divider"></div>
+    <div class="divider h-0"></div>
 </template>
 
 <script>
@@ -28,12 +30,11 @@ export default {
     },
     setup() {
         const stream = useStreamStore()
-        return { getStreamUrl: stream.getStreamUrl, requestStream : stream.requestStream}
+        return { stream }
     },
     methods: {
          async getStream(url) {
-
-            this.requestStream(url).then (() => {
+            this.stream.requestStream(url).then (() => {
 
                 this.$router.push({ 
                     name: 'stream', 
@@ -52,6 +53,10 @@ export default {
 
 #streaming-url {
     cursor: pointer;
+}
+
+#streaming-url-wrapper {
+    width: 300px;
 }
 
 #thumbnail {

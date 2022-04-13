@@ -3,10 +3,10 @@
         <div id="search-bar" ref="search-bar" class="flex-x-center fit-content pt-6 pb-3">
             <input id="input-bar" class="input w-full flex-1 mr-3 focus:outline-green" type="text" v-model="search"
                 placeholder="Search some contents..."
-                @keyup.enter="resetPage(); searchContent(searchType, streamType, this.currPage);">
+                @keyup.enter="resetPage(); searchContent(searchType, search, streamType, currPage);">
 
             <button class="btn bg-green text-white hover:bg-green"
-                @click="resetPage(); searchContent(searchType, streamType, this.currPage);">
+                @click="resetPage(); searchContent(searchType, search, streamType, currPage);">
                 Search
             </button>
         </div>
@@ -46,17 +46,35 @@
                 <SearchItem :thumbnail="item.value.thumbnail" 
                             :streamUrl="item.short_url">
                     <template v-slot:center>
+
+                        <div v-if="item.value.title">
+                        {{ item.value.title }}
+                        </div>
+
+                        <div v-else>
                         {{ item.name }}
+                        </div>
+
                     </template>
                     <template v-slot:rear>
 
-                        <label v-if="item.value.source">
-                            {{ item.value.source.media_type }}
-                        </label>
+                        <div v-if="item.value.tags" id="tag-group" class="flex-x row-start-6">
+                            <div v-if="item.value.tags[0]" class="badge tag-spacing rounded-md"
+                                @click="queryTag(item.value.tags[0])"> 
+                                 {{ item.value.tags[0] }}
+                            </div>
 
-                        <text v-else id="text-unknown">
-                            unknown
-                        </text>
+                            <div v-if="item.value.tags[1]" class="badge tag-spacing rounded-md"
+                                @click="queryTag(item.value.tags[1])"> 
+                                {{ item.value.tags[1] }} 
+                            </div>
+
+                            <div v-if="item.value.tags[2]" class="badge rounded-md"
+                                @click="queryTag(item.value.tags[2])"> 
+                                {{ item.value.tags[2] }} 
+                            </div>
+
+                        </div>
                         
                     </template>
                 </SearchItem>
@@ -68,7 +86,7 @@
             <p> {{ this.currPage }} </p>
             <p class="flex-x-center">
                 <button class="btn bg-green hover:bg-green"
-                    @click="resetPage(); searchContent(searchType, streamType, this.currPage);">First</button>
+                    @click="resetPage(); searchContent(searchType, search, streamType, currPage);">First</button>
                 <button class="btn bg-green hover:bg-green" @click="prevPage()">Prev</button>
                 <button class="btn bg-green hover:bg-green" @click="nextPage()">Next</button>
             </p>
@@ -98,9 +116,9 @@ export default {
 
     },
     methods: {
-        async searchContent(searchType, streamType, pageNum) {
+        async searchContent(searchType, searchContent, streamType, pageNum) {
 
-            let normalizedSearch = Normalizer.run(this.search, searchType)
+            let normalizedSearch = Normalizer.run(searchContent, searchType)
 
             EventService.getContent(searchType, streamType, normalizedSearch, pageNum).then((response) => {
 
@@ -115,15 +133,22 @@ export default {
         prevPage() {
             if (this.currPage > 1) {
                 this.currPage -= 1
-                this.searchContent(this.searchType, this.streamType, this.currPage)
+                this.searchContent(this.searchType, this.search, this.streamType, this.currPage)
             }
         },
         nextPage() {
             this.currPage += 1
-            this.searchContent(this.searchType, this.streamType, this.currPage)
+            this.searchContent(this.searchType, this.search, this.streamType, this.currPage)
         },
         resetPage() {
             this.currPage = 1
+        },
+        queryTag(tag) {
+            this.resetPage()
+            this.searchContent('tag', tag, 'video', this.currPage)
+            .then(() => {
+                this.search = tag
+            })
         }
     },
 };
@@ -144,19 +169,27 @@ button {
     @apply border-black
 }
 
+.badge {
+    @apply bg-white-sub;
+    @apply text-black;
+    @apply hover:bg-green;
+    @apply border-0;
+    cursor: pointer;
+}
+
 [data-theme="dark"] #input-bar {
     @apply bg-gray-white;
+}
+
+[data-theme="dark"] .badge {
+    @apply bg-gray-white;
+    @apply text-white;
+    @apply hover:bg-green;
 }
 
 .avatar {
     float: left;
     object-fit: cover;
-    cursor: pointer;
-}
-
-.list-md {
-    padding-top: 0.1rem;
-    padding-bottom: 0.1rem;
 }
 
 .input,
@@ -165,9 +198,8 @@ button {
     min-height: auto !important;
 }
 
-#download-button {
-    margin-right: 12px;
-    margin-bottom: 12px;
+.tag-spacing {
+    margin: 0 6.4px 0 0;
 }
 
 #search-filter {

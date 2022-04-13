@@ -21,9 +21,18 @@ export const useStreamStore = defineStore (
         actions: {
             async requestStream(url) {
                 EventService.getStreamByUrl(url).then((response) => {
+
                     this.stream.url = response.streaming_url
-                    this.stream.desc = response.metadata.description
-                    this.stream.tags = Object.values(response.metadata.tags)
+
+                    if (response.metadata !== undefined) {
+                        
+                        if (response.metadata.description !== undefined) {
+                            this.stream.desc = response.metadata.description
+                        }
+                        if (response.metadata.tags !== undefined) {
+                            this.stream.tags = Object.values(response.metadata.tags)
+                        }
+                    }
                 })
             },
         }
