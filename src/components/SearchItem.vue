@@ -37,7 +37,7 @@ export default {
 
                 this.$router.push({ 
                     name: 'stream', 
-                    query: { url:  this.getStreamUrl}
+                    query: { url:  url}
                 })
             })
         },

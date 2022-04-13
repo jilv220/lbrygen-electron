@@ -59,16 +59,19 @@ export default {
 
         this.stream.$subscribe((mutation, state) => {
 
-            //console.log(state.stream.tags)
-            EventService.getContent('tag', 'video', state.stream.tags).then((response) => {
+            // Make sure only request once
+            if (mutation.storeId == 'stream' && this.sourceData == '') {
 
-                //console.log(response)
-                if (response.error !== undefined) {
-                    console.error(response)
-                } else {
-                    this.sourceData = response
-                }
-            })
+                EventService.getContent('tag', 'video', state.stream.tags).then((response) => {
+
+                    //console.log(response)
+                    if (response.error !== undefined) {
+                        console.error(response)
+                    } else {
+                        this.sourceData = response
+                    }
+                })
+            }
         })
     }
 }
