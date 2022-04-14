@@ -5,10 +5,11 @@
             <div v-if="sourceData!=''" id="layout" class="grid grid-cols-3 gap-8 mt-4 px-4">
 
                 <div id="container" class="grid grid-rows-9 col-span-2">
-                    <iframe allowfullscreen webkitallowfullscreen :src="stream.getStreamUrl" frameborder="0">
+                    <iframe width="560" height="315"
+                    allowfullscreen webkitallowfullscreen :src="stream.getStreamUrl" frameborder="0">
                     </iframe>
 
-                    <div id="stream-info" >
+                    <div id="stream-info" class="mt-6">
 
                         <h1 id="stream-title">
                             {{ title }}
@@ -77,8 +78,6 @@ export default {
     },
     mounted() {
 
-        //window.frames[0].stop()
-
         // Only load to template when mutation happens
         this.stream.$subscribe((mutation, state) => {
 
@@ -111,44 +110,28 @@ p {
 }
 
 iframe {
-    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    max-height: 30%;
-}
-
-@media (max-height: 768px) {
-
-    iframe {
-        max-height: 22.5%;
-    }
 }
 
 /* md screen */
-@media (min-width: 768px) and (max-width: 1150px) {
-
-    #content-wrapper {
-        @apply p-6
-    }
+@media (max-width: 1150px) {
 
     #layout {
         display: unset
     }
 
     iframe {
-        max-height: 39%
-    }
-
-    #stream-info {
-        padding-top: 9rem
+        height: ;
     }
 }
 
 #container {
     position: relative;
-    padding-top: 50%;
+    padding-bottom: 56.25%;
+    overflow: hidden;
 }
 
 #content-wrapper {
@@ -170,7 +153,6 @@ iframe {
 }
 
 #stream-info {
-    padding-top: 7rem;
     text-align: start;
 }
 

@@ -1,9 +1,19 @@
 <template>
     <div id="content" class="mx-10">
         <div id="search-bar" ref="search-bar" class="flex-x-center fit-content pt-6 pb-3 mt-14">
-            <input id="input-bar" class="input w-full flex-1 mr-3 focus:outline-green" type="text" v-model="search"
+            <div class="dropdown flex-1 mr-3">
+            <input tabindex="0" id="input-bar" class="input w-full focus:outline-green" type="text" v-model="search"
                 placeholder="Search some contents..."
+                autocomplete="off"
                 @keyup.enter="resetPage(); searchContent(searchType, search, streamType, currPage);">
+            
+            <div tabindex="0" id="search-history"  class="dropdown-content px-4 grid grid-flow-row">
+                <li>
+                    <div class="my-2">Placeholder</div>
+                    <div class="divider h-0 m-0"></div>
+                </li>
+            </div>
+            </div>
 
             <button class="btn bg-green text-white hover:bg-green"
                 @click="resetPage(); searchContent(searchType, search, streamType, currPage);">
@@ -203,6 +213,14 @@ button {
 
 .tag-spacing {
     margin: 0 6.4px 0 0;
+}
+
+#search-history {
+    margin: 0.5rem 0 0 0;
+    width: 100%;
+    text-align: start;
+    @apply bg-gray-white;
+    @apply rounded-md
 }
 
 #search-filter {

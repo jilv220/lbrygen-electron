@@ -111,6 +111,11 @@
     align-items: center;
     justify-content: space-between;
 }
+.flex-y {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
 .flex-x-center {
   display: flex;
   align-items: center;
