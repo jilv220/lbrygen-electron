@@ -3,6 +3,7 @@
 import { app, protocol, BrowserWindow } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS3_DEVTOOLS } from 'electron-devtools-installer'
+const contextMenu = require('electron-context-menu');
 const { spawn, fork } = require('child_process');
 const path = require('path');
 const os = require('os');
@@ -42,6 +43,10 @@ if (isDevelopment) {
 } else {
   initDaemon()
 }
+
+contextMenu({
+	showInspectElement: true
+});
 
 async function createWindow() {
   // Create the browser window.

@@ -9,13 +9,15 @@
             
             <div tabindex="0" id="search-history"  class="dropdown-content px-4 grid grid-flow-row">
                 <li>
-                    <div class="my-2">Placeholder</div>
-                    <div class="divider h-0 m-0"></div>
+                    <div class="my-2 cursor-pointer" @click="setSearchContent()" >
+                        Placeholder
+                    </div>
+                    <div id="search-history-divider" class="divider h-0 m-0"></div>
                 </li>
             </div>
             </div>
 
-            <button class="btn bg-green text-white hover:bg-green"
+            <button id="search-btn" class="btn bg-green text-white hover:bg-green"
                 @click="resetPage(); searchContent(searchType, search, streamType, currPage);">
                 Search
             </button>
@@ -140,6 +142,10 @@ export default {
                     this.sourceData = response
                 }
             })
+        },
+        setSearchContent() {
+            this.search = 'Placeholder'
+            document.activeElement.blur()
         },
         prevPage() {
             if (this.currPage > 1) {

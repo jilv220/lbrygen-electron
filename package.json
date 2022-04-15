@@ -21,6 +21,7 @@
     "cors": "^2.8.5",
     "decompress": "^4.2.1",
     "del": "^6.0.0",
+    "electron-context-menu": "^3.1.2",
     "json-rpc-2.0": "^0.2.18",
     "pinia": "^2.0.13",
     "vue": "^3.2.13",
@@ -59,7 +60,7 @@
     }
   },
   "lbrySettings": {
-    "lbrynetDaemonVersion": "0.107.1",
+    "lbrynetDaemonVersion": "0.108.0",
     "lbrynetDaemonUrlTemplate": "https://github.com/lbryio/lbry/releases/download/vDAEMONVER/lbrynet-OSNAME.zip",
     "lbrynetDaemonDir": "static/daemon",
     "lbrynetDaemonFileName": "lbrynet"
