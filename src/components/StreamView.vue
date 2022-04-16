@@ -115,18 +115,26 @@ iframe {
     width: 100%;
 }
 
-/* md screen */
-@media (max-width: 1150px) {
-
-    #layout {
-        display: unset
-    }
-}
-
 #container {
     position: relative;
     padding-bottom: 200%;
     overflow: hidden;
+}
+
+/* md screen */
+@media (max-width: 1200px) {
+
+    #layout {
+        display: unset;
+    }
+
+    #container {
+        padding-bottom: 1rem;
+    }
+
+    #stream-info {
+        @apply px-4;
+    }
 }
 
 #content-wrapper {

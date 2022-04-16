@@ -56,7 +56,8 @@
         <div v-if="sourceData != ''">
             <li v-for="item in sourceData.result.items" :key="item">
                 <SearchItem :thumbnail="item.value.thumbnail" 
-                            :streamUrl="item.short_url">
+                            :streamUrl="item.short_url"
+                            :avatar="item.signing_channel">
                     <template v-slot:center>
 
                         <div v-if="item.value.title">
@@ -66,6 +67,14 @@
                         <div v-else>
                         {{ item.name }}
                         </div>
+
+                    </template>
+                    <template v-slot:center-sub>
+
+                        <div v-if="item.signing_channel">
+                        {{ item.signing_channel.value.title }}
+                        </div>
+                        <div v-else> Anonymous </div>
 
                     </template>
                     <template v-slot:rear>
@@ -132,6 +141,7 @@ export default {
 
             window.scrollTo(0,0)
             let normalizedSearch = Normalizer.run(searchContent, searchType)
+            document.activeElement.blur()
 
             EventService.getContent(searchType, streamType, normalizedSearch, pageNum).then((response) => {
 
@@ -245,10 +255,10 @@ button {
     padding-right: 10px;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 960px) {
     #content {
-        margin-right: 4rem;
-        margin-left: 4rem;
+        margin-right: 1rem;
+        margin-left: 1rem;
     }
 }
 </style>

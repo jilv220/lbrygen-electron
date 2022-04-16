@@ -127,6 +127,11 @@
     align-items: center;
     justify-content: center;
 }
+.flex-x-start {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
 
 /* small screen */
 @media (max-width: 890px) {

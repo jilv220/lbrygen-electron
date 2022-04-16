@@ -44,9 +44,7 @@ if (isDevelopment) {
   initDaemon()
 }
 
-contextMenu({
-	showInspectElement: true
-});
+contextMenu({});
 
 async function createWindow() {
   // Create the browser window.
