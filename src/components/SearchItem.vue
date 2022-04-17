@@ -3,7 +3,7 @@
 
         <div class="avatar">
             <div id="thumbnail" class="rounded">
-                <img v-if="thumbnail" :src="thumbnail.url" loading="lazy">
+                <img v-if="thumbnail" :src="thumbnail.url">
             </div>
         </div>
 
@@ -14,7 +14,8 @@
             </label>
 
             <div class="flex-x-start mt-2">
-                <div class="avatar mr-2">
+
+                <div v-if="showAvatar" id="channel-avatar-wrapper" class="avatar mr-2">
                     <div id="channel-avatar" class="rounded-full">
                         <img v-if="avatar 
                                 && avatar.value 
@@ -22,10 +23,12 @@
                             :src="avatar.value.thumbnail.url" loading="lazy">
                     </div>
                 </div>
+                <div v-else></div>
 
                 <label id="channel-name">
                     <slot name="center-sub"></slot>
                 </label>
+
             </div>
 
         </div>
@@ -45,6 +48,10 @@ export default {
         thumbnail: Object,
         streamUrl: String,
         avatar: Object,
+        showAvatar: {
+            default: true,
+            type: Boolean
+        },
     },
     setup() {
         const stream = useStreamStore()

@@ -71,7 +71,8 @@
                     </template>
                     <template v-slot:center-sub>
 
-                        <div v-if="item.signing_channel">
+                        <div v-if="item.signing_channel
+                                && item.signing_channel.value">
                         {{ item.signing_channel.value.title }}
                         </div>
                         <div v-else> Anonymous </div>

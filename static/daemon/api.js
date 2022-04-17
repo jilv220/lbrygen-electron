@@ -53,6 +53,8 @@ app.get('/api/search', (req, res) => {
     let pageSize = req.query.ps
     let streamType = req.query.st
 
+    let order = req.query.o
+
     // console.log(tag)
 
     let params = { method : 'claim_search',
@@ -60,7 +62,7 @@ app.get('/api/search', (req, res) => {
                               page : pageNum === undefined ? 1 : Number(pageNum),
                               page_size : pageSize == undefined ? PAGE_SIZE : Number(pageSize),
                               stream_type : [ streamType == undefined ? 'video' : streamType ],
-                              order_by : 'release_time',
+                              order_by : order == undefined ? 'release_time' : order,
                               no_totals : true }}
     
     // support both string and array

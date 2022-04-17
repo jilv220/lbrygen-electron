@@ -10,11 +10,12 @@ export default {
   },
 
   async downloadFromStream(url) {
-    let res = await axios.get(`${base_api}/getStream?url=${url}`, { params: { d: "y" } });
+    let res = await axios.get(`${base_api}/getStream?url=${url}`, { params: { d: 'y' } });
     return res.data;
   },
 
-  async getContent(type, streamType, content, pageNum = 1, pageSize = 18) {
+  async getContent(type, streamType, content, 
+                        pageNum = 1, pageSize = 18, order = 'release_time') {
 
     let queryType = ''
 
@@ -24,6 +25,7 @@ export default {
       p: pageNum, 
       ps: pageSize, 
       st: streamType,
+      o: order
     }
 
     if (Array.isArray(content)) {

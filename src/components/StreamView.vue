@@ -30,9 +30,16 @@
                     <li v-for="item in sourceData.result.items" :key="item">
                         <SearchItem 
                             :thumbnail="item.value.thumbnail" 
-                            :streamUrl="item.short_url">
+                            :streamUrl="item.short_url"
+                            :showAvatar="false">
                             <template v-slot:center>
                                 {{ item.name }}
+                            </template>
+                            <template v-slot:center-sub>
+                                <div v-if="item.signing_channel">
+                                {{ item.signing_channel.value.title }}
+                                </div>
+                                <div v-else> Anonymous </div>
                             </template>
                         </SearchItem>
                     </li>
@@ -83,11 +90,11 @@ export default {
 
             this.title = this.stream.getStreamTitle
             this.descList = this.stream.getStreamDesc.split('\n')
-
+            
             // Make sure only request once
             if (mutation.storeId == 'stream' && this.sourceData == '') {
 
-                EventService.getContent('tag', 'video', state.stream.tags).then((response) => {
+                EventService.getContent('tag', 'video', state.stream.tags, 1, 18, "trending_group").then((response) => {
 
                     //console.log(response)
                     if (response.error !== undefined) {
