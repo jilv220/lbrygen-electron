@@ -3,31 +3,56 @@
     <div>
       <!-- drawer -->
       <div class="drawer h-auto">
-        <input id="my-drawer" class="drawer-toggle" type="checkbox">
+        <input id="my-drawer" class="drawer-toggle" type="checkbox" />
         <div class="drawer-content overflow-hidden">
           <!-- Page content here -->
           <div id="navbar" class="navbar fixed shadow z-50">
-
             <div class="navbar-start">
               <label for="my-drawer" class="mr-6">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor" stroke-width="2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
                   <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
               </label>
             </div>
 
-            <div class="flex-1">
+            <div class="pr-4">
               <img class="lbry-logo" alt="Lbry logo" src="./assets/lbry_logo.svg" />
             </div>
 
+            <div class="flex-1">
+              <SearchBar></SearchBar>
+            </div>
+
             <div class="navbar-end">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
                 <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
               </svg>
-              <input type="checkbox" class="toggle mx-3" @click="switchTheme()" v-model="this.checked">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd"
+              <input
+                type="checkbox"
+                class="toggle mx-3"
+                @click="switchTheme()"
+                v-model="this.checked"
+              />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fill-rule="evenodd"
                   d="M10 2a1 1 0 011 1v1a1 1 0 11-2 
                   0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0
                   4 4 0 018 0zm-.464 4.95l.707.707a1 
@@ -39,10 +64,10 @@
                   0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 
                   8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 
                   0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
-                  clip-rule="evenodd" />
+                  clip-rule="evenodd"
+                />
               </svg>
             </div>
-
           </div>
 
           <!-- Router -->
@@ -51,7 +76,6 @@
               <component :is="Component" :key="$route.fullPath" />
             </keep-alive>
           </router-view>
-
         </div>
 
         <!-- Drawer Content -->
@@ -61,19 +85,26 @@
             <!-- Sidebar content here -->
             <li @click="navigateToSearchView()">
               <div class="active:bg-green">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  />
                 </svg>
                 Search
               </div>
             </li>
           </ul>
         </div>
-
       </div>
-
     </div>
   </div>
 
@@ -84,17 +115,18 @@
       <div class="ring"></div>
       <div class="ring"></div>
       <div class="dot"></div>
-    </div>  
+    </div>
   </div>
-
 </template>
 
 <script>
 import EventService from "./services/EventService.js"
+import SearchBar from '@/components/SearchBar.vue'
+
 export default {
   name: "App",
   components: {
-
+    SearchBar
   },
   data() {
     return {
@@ -157,7 +189,6 @@ export default {
 </script>
 
 <style>
-
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -172,13 +203,14 @@ export default {
   @apply bg-black;
 }
 
-#navbar, #drawer-sidebar {
-    @apply bg-white
+#navbar,
+#drawer-sidebar {
+  @apply bg-white;
 }
 
 [data-theme="dark"] #navbar,
-[data-theme="dark"] #drawer-sidebar  {
-    @apply bg-gray-light;
+[data-theme="dark"] #drawer-sidebar {
+  @apply bg-gray-light;
 }
 
 .fancy-spinner {
@@ -237,7 +269,6 @@ export default {
 
 /* small screen */
 @media (max-width: 890px) {
-
   .lbry-logo {
     height: 24px;
   }
@@ -249,7 +280,6 @@ export default {
 }
 
 @media (min-width: 890px) {
-
   .lbry-logo {
     height: 24px;
   }
