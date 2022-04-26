@@ -81,8 +81,8 @@ async function createWindow() {
 app.on('window-all-closed', () => {
 
   // kill all child process
-  lbrynet.kill('SIGINT');
-  lbryApi.kill('SIGINT');
+  if (lbrynet) { lbrynet.kill('SIGINT') }
+  if (lbryApi) { lbryApi.kill('SIGINT') }
 
   // On macOS it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
