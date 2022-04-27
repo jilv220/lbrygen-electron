@@ -27,6 +27,13 @@ export const useSearchStore = defineStore (
                 this.search.streamType = 'video'
                 this.search.currPage = 1
             },
+            initFilter() {
+                this.search.searchType = 'tag'
+                this.search.streamType = 'video'
+            },
+            resetPage() {
+                this.search.currPage = 1   
+            },
             storeAll(searchType, searchContent, streamType, currPage) {
                 this.search.searchType = searchType
                 this.search.searchContent = searchContent

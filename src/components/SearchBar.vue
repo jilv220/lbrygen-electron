@@ -28,9 +28,6 @@ export default {
             searchContent: '',
         }
     },
-    mounted() {
-        this.search.init()
-    },
     methods: {
         async performSearch(searchType, searchContent, streamType) {
 
@@ -49,11 +46,26 @@ export default {
             })
         },
         resetSearch() {
-            this.search.init()
+            this.search.resetPage()
         },
     }
 }
 </script>
 
 <style>
+.input {
+    height: 2.5rem !important;
+    min-height: auto !important;
+}
+
+#input-bar {
+    @apply bg-white;
+    @apply input-bordered;
+    @apply border-black
+}
+
+[data-theme="dark"] #input-bar {
+    @apply bg-gray-white;
+}
+
 </style>

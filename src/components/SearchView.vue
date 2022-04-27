@@ -1,35 +1,5 @@
 <template>
-    <div id="content" class="mx-10 pt-10">
-        <div id="filter-area" class="pb-6 flex-x-center">
-
-            <form id="stream-filter" autocomplete="off">
-                <label class="pl-02 pr-06">Filter by : </label>
-
-                <input type="radio" id="video" value="video" v-model="streamType">
-                <label class="pl-02 pr-06" for="video">Video</label>
-
-                <input type="radio" id="image" value="image" v-model="streamType">
-                <label class="pl-02 pr-06" for="image">Image</label>
-
-                <input type="radio" id="document" value="document" v-model="streamType">
-                <label class="pl-02" for="document">Document</label>
-            </form>
-
-            <form id="search-filter" autocomplete="off">
-                <label class="pl-02 pr-06">Search by : </label>
-
-                <input type="radio" id="tag" value="tag" v-model="searchType">
-                <label class="pl-02 pr-06" for="tag">Tag</label>
-
-                <input type="radio" id="text" value="text" v-model="searchType">
-                <label class="pl-02 pr-06" for="text">Text</label>
-
-                <input type="radio" id="channel" value="channel" v-model="searchType">
-                <label class="pl-02" for="channel">Channel</label>
-            </form>
-
-        </div>
-
+    <div id="content" class="mx-10 pt-20">
         <div v-if="sourceData != ''">
             <li v-for="item in sourceData.result.items" :key="item">
                 <SearchItem :thumbnail="item.value.thumbnail" 
@@ -182,22 +152,12 @@ button {
     cursor: pointer;
 }
 
-#input-bar {
-    @apply bg-white;
-    @apply input-bordered;
-    @apply border-black
-}
-
 .badge {
     @apply bg-white-sub;
     @apply text-black;
     @apply hover:bg-green;
     @apply border-0;
     cursor: pointer;
-}
-
-[data-theme="dark"] #input-bar {
-    @apply bg-gray-white;
 }
 
 [data-theme="dark"] .badge {
@@ -209,12 +169,6 @@ button {
 .avatar {
     float: left;
     object-fit: cover;
-}
-
-.input,
-.btn {
-    height: 2.5rem !important;
-    min-height: auto !important;
 }
 
 .tag-spacing {
