@@ -1,28 +1,5 @@
 <template>
-    <div id="content" class="mx-10">
-        <div id="search-bar" ref="search-bar" class="flex-x-center fit-content pt-6 pb-3 mt-14">
-            <div class="dropdown flex-1 mr-3">
-            <input tabindex="0" id="input-bar" class="input w-full focus:outline-green" type="text" v-model="search"
-                placeholder="Search some contents..."
-                autocomplete="off"
-                @keyup.enter="resetPage(); searchContent(searchType, search, streamType, currPage);">
-            
-            <div tabindex="0" id="search-history"  class="dropdown-content px-4 grid grid-flow-row">
-                <li>
-                    <div class="my-2 cursor-pointer" @click="setSearchContent()" >
-                        Placeholder
-                    </div>
-                    <div id="search-history-divider" class="divider h-0 m-0"></div>
-                </li>
-            </div>
-            </div>
-
-            <button id="search-btn" class="btn bg-green text-white hover:bg-green"
-                @click="resetPage(); searchContent(searchType, search, streamType, currPage);">
-                Search
-            </button>
-        </div>
-
+    <div id="content" class="mx-10 pt-10">
         <div id="filter-area" class="pb-6 flex-x-center">
 
             <form id="stream-filter" autocomplete="off">
@@ -119,23 +96,35 @@
 <script>
 import EventService from "../services/EventService.js"
 import Normalizer from '../utils/Normalizer.js'
+import { useSearchStore } from "@/stores/SearchStore.js"
+
 import SearchItem from '@/components/SearchItem.vue'
 
 export default {
     components: {
         SearchItem
     },
+    setup() {
+        const search = useSearchStore()
+        return { search }
+    },
     data() {
         return {
-            search: "",
-            sourceData: "",
+            // search: "",
+            sourceData: '',
             searchType: "tag",
             streamType: "video",
             currPage: 1,
         };
     },
     mounted() {
-
+        this.search.$subscribe((mutation, state) => {
+            
+            // Make sure only request once
+            if (mutation.storeId == 'search') {
+                this.sourceData = state.search.sourceData
+            }
+        })
     },
     methods: {
         async searchContent(searchType, searchContent, streamType, pageNum) {
