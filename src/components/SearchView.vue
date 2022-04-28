@@ -1,6 +1,6 @@
 <template>
     <div id="content" class="mx-10 pt-20">
-        <div v-if="sourceData != ''">
+        <div v-if="sourceData && sourceData.result">
             <li v-for="item in sourceData.result.items" :key="item">
                 <SearchItem :thumbnail="item.value.thumbnail" 
                             :streamUrl="item.short_url"
@@ -51,7 +51,7 @@
         </div>
 
         <!-- pagination -->
-        <div v-if="sourceData != ''">
+        <div v-if="sourceData && sourceData.result">
             <p> {{ this.currPage }} </p>
             <p class="flex-x-center">
                 <button class="btn bg-green hover:bg-green"

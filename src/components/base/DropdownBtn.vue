@@ -1,8 +1,8 @@
 <template>
-    <div class="dropdown dropdown-end">
-        <label class="cursor-pointer" tabindex="0">
+    <div class="dropdown dropdown-end dropdown-hover">
+        <div class="cursor-pointer" tabindex="0">
             <slot name="btn-icon"></slot>
-        </label>
+        </div>
         <div class="dropdown-content menu">
             <slot name="dropdown-content"></slot>
         </div>
@@ -16,4 +16,8 @@ export default {
 </script>
 
 <style>
+.btn {
+  background-color: unset !important;
+  color: unset !important;
+}
 </style>
