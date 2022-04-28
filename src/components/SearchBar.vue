@@ -28,12 +28,18 @@ export default {
             searchContent: '',
         }
     },
+    watch:{
+        $route(to, from) {
+            // clear searchbar when leave searchView
+            if (from.name == 'search') {
+                this.searchContent = ''
+            }
+        }
+    }, 
     methods: {
         async performSearch(searchType, searchContent, streamType) {
-
-            window.scrollTo(0,0)
+            
             let normalizedSearch = Normalizer.run(searchContent, searchType)
-            document.activeElement.blur()
 
             EventService.getContent(searchType, streamType, normalizedSearch).then((response) => {
 
@@ -43,6 +49,10 @@ export default {
                 } else {
                     this.search.storeSourceData(response)
                 }
+            }).then(() => {
+                this.$router.push({ 
+                    name: 'search'
+                })
             })
         },
         resetSearch() {

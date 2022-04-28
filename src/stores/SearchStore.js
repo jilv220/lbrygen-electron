@@ -18,7 +18,8 @@ export const useSearchStore = defineStore (
             getSearchType: (state) => state.search.searchType,
             getSearchContent: (state) => state.search.searchContent,
             getStreamType: (state) => state.search.streamType,
-            getCurrPage: (state) => state.search.currPage
+            getCurrPage: (state) => state.search.currPage,
+            getSourceData: (state) => state.search.sourceData
         },
         actions: {
             init() {

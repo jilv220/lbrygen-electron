@@ -15,7 +15,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .btn {
   background-color: unset !important;
   color: unset !important;

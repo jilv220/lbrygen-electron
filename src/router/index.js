@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 
+const Home = () => import('../components/HomeView.vue')
 const Search = () => import('../components/SearchView.vue')
 const Stream = () => import('../components/StreamView.vue')
 
@@ -7,6 +8,11 @@ const routes = [
   {
     path: '/',
     name: 'home',
+    component: Home
+  },
+  {
+    path: '/search',
+    name: 'search',
     component: Search
   },
   {

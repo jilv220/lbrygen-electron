@@ -88,6 +88,7 @@ export default {
         };
     },
     mounted() {
+        this.sourceData = this.search.getSourceData
         this.search.$subscribe((mutation, state) => {
             
             // Make sure only request once
