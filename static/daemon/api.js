@@ -85,6 +85,20 @@ app.get('/api/search', (req, res) => {
     })
 })
 
+app.get('/api/resolveSingle', (req, res) => {
+
+    let canonUrl = req.query.curl
+    
+    let params = { method : 'resolve',
+                   params : { urls : canonUrl === undefined ? undefined : canonUrl }}
+    
+    apiCall(params)
+    .then((daemonRes) => {
+      //console.log(daemonRes)
+      res.send(daemonRes)
+    })
+})
+
 app.get('/api/getStream', (req, res) => {
 
     let uri = req.query.url

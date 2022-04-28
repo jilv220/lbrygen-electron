@@ -66,6 +66,11 @@ export default {
     return res.data 
   },
 
+  async resolveClaimSingle(curl) {
+    let res = await axios.get(`${base_api}/resolveSingle?urls=${curl}`);
+    return res.data;
+  },
+
   async getDaemonStatus() {
     let res = await axios.get(`${base_api}/status`)
     return res.data 
