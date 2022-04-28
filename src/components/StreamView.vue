@@ -18,9 +18,10 @@
                         <div id="stream-info-divider" class="divider h-0"></div>
 
                         <div id="stream-desc">
-                            <li v-for="(line, index) in descList" :key="index">
-                                <p> {{ line }} </p>
-                            </li>
+                            <div v-for="(line, index) in descList" :key="index">
+                                <a v-if='isHyperlink(line)' :href='line' class="text-green" target="_blank"> {{line}} </a>
+                                <p v-else> {{ line }} </p>
+                            </div>
                         </div>
 
                     </div>
@@ -64,6 +65,7 @@
 import EventService from "../services/EventService.js"
 import { useStreamStore } from "@/stores/StreamStore.js"
 import SearchItem from '@/components/SearchItem.vue'
+import {isHyperlink} from "@/utils/reUtils.js"
 
 export default {
     props: {
@@ -105,6 +107,9 @@ export default {
                 })
             }
         })
+    },
+    methods: {
+        isHyperlink
     }
 }
 </script>
