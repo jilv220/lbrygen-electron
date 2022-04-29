@@ -2,11 +2,11 @@
     <div>
         <div id="content-wrapper" class="">
 
-            <div v-if="sourceData!=''" id="layout" class="grid grid-cols-3 gap-8 mt-4 px-4">
+            <div v-if="sourceData != ''" id="layout" class="grid grid-cols-3 gap-8 mt-4 px-4">
 
                 <div id="container" class="grid grid-rows-9 col-span-2">
-                    <iframe width="1280" height="630"
-                    allowfullscreen webkitallowfullscreen :src="stream.getStreamUrl" frameborder="0">
+                    <iframe width="1280" height="630" allowfullscreen webkitallowfullscreen :src="stream.getStreamUrl"
+                        frameborder="0">
                     </iframe>
 
                     <div id="stream-info" class="mt-6">
@@ -19,26 +19,25 @@
 
                         <div id="stream-desc">
                             <div v-for="(line, index) in descList" :key="index">
-                                <a v-if='isHyperlink(line)' :href='line' class="text-green" target="_blank"> {{line}} </a>
+                                <a v-if='isHyperlink(line)' :href='line' class="text-green" target="_blank"> {{ line }}
+                                </a>
                                 <p v-else> {{ line }} </p>
                             </div>
                         </div>
 
+                        <button id="expand-btn" class="text-green" @click="expandDesc()">More</button>
                     </div>
                 </div>
 
-                <div id="related-videos"  class="card flex-1">
+                <div id="related-videos" class="card flex-1">
                     <li v-for="item in sourceData.result.items" :key="item">
-                        <SearchItem 
-                            :thumbnail="item.value.thumbnail" 
-                            :streamUrl="item.short_url"
-                            :showAvatar="false">
+                        <SearchItem :thumbnail="item.value.thumbnail" :streamUrl="item.short_url" :showAvatar="false">
                             <template v-slot:center>
                                 {{ item.name }}
                             </template>
                             <template v-slot:center-sub>
                                 <div v-if="item.signing_channel">
-                                {{ item.signing_channel.value.title }}
+                                    {{ item.signing_channel.value.title }}
                                 </div>
                                 <div v-else> Anonymous </div>
                             </template>
@@ -48,12 +47,12 @@
 
             </div>
 
-            <div v-else id="stream-loading"  class="flex-y-center">
+            <div v-else id="stream-loading" class="flex-y-center">
                 <div class="fancy-spinner">
                     <div class="ring"></div>
                     <div class="ring"></div>
                     <div class="dot"></div>
-                </div>  
+                </div>
             </div>
 
         </div>
@@ -65,7 +64,7 @@
 import EventService from "../services/EventService.js"
 import { useStreamStore } from "@/stores/StreamStore.js"
 import SearchItem from '@/components/SearchItem.vue'
-import {isHyperlink} from "@/utils/reUtils.js"
+import { isHyperlink } from "@/utils/ReUtils.js"
 
 export default {
     props: {
@@ -82,7 +81,8 @@ export default {
         return {
             sourceData: '',
             title: '',
-            descList: ['']
+            descList: [''],
+            shouldExpand: true
         }
     },
     mounted() {
@@ -92,7 +92,7 @@ export default {
 
             this.title = this.stream.getStreamTitle
             this.descList = this.stream.getStreamDesc.split('\n')
-            
+
             // Make sure only request once
             if (mutation.storeId == 'stream' && this.sourceData == '') {
 
@@ -109,7 +109,19 @@ export default {
         })
     },
     methods: {
-        isHyperlink
+        isHyperlink,
+        expandDesc() {
+            if(this.shouldExpand) {
+                document.getElementById('expand-btn').innerHTML = 'More'
+                document.getElementById('stream-desc').style.overflow = 'unset'
+                document.getElementById('stream-desc').style.maxHeight = 'unset'
+            } else {
+                document.getElementById('expand-btn').innerHTML = 'Less'
+                document.getElementById('stream-desc').style.overflow = 'hidden'
+                document.getElementById('stream-desc').style.maxHeight = '10em'
+            }
+            this.shouldExpand = !this.shouldExpand
+        }
     }
 }
 </script>
@@ -184,5 +196,12 @@ iframe {
 
 #stream-desc {
     max-width: 50em;
+    overflow: hidden;
+    max-height: 10em;
+}
+
+#expand-btn {
+    font-size: 1.1rem;
+    font-weight: 400;
 }
 </style>
