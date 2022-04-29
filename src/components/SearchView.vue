@@ -54,20 +54,16 @@
         <div v-if="sourceData && sourceData.result">
             <p> {{ this.currPage }} </p>
             <p class="flex-x-center">
-                <button class="btn bg-green hover:bg-green"
-                    @click="resetPage(); searchContent(searchType, search, streamType, currPage);">First</button>
-                <button class="btn bg-green hover:bg-green" @click="prevPage()">Prev</button>
-                <button class="btn bg-green hover:bg-green" @click="nextPage()">Next</button>
+                <button class="btn bg-green hover:bg-green">First</button>
+                <button class="btn bg-green hover:bg-green">Prev</button>
+                <button class="btn bg-green hover:bg-green">Next</button>
             </p>
         </div>
   </div>
 </template>
 
 <script>
-import EventService from "../services/EventService.js"
-import Normalizer from '../utils/Normalizer.js'
 import { useSearchStore } from "@/stores/SearchStore.js"
-
 import SearchItem from '@/components/SearchItem.vue'
 
 export default {
@@ -78,16 +74,19 @@ export default {
         const search = useSearchStore()
         return { search }
     },
+    props: {
+        searchContent: String,
+        queryType: String,
+        streamType: String
+    },
     data() {
         return {
-            // search: "",
             sourceData: '',
-            searchType: "tag",
-            streamType: "video",
             currPage: 1,
         };
     },
     mounted() {
+        //console.log(this.searchContent)
         this.sourceData = this.search.getSourceData
         this.search.$subscribe((mutation, state) => {
             
@@ -98,47 +97,9 @@ export default {
         })
     },
     methods: {
-        async searchContent(searchType, searchContent, streamType, pageNum) {
-
-            window.scrollTo(0,0)
-            let normalizedSearch = Normalizer.run(searchContent, searchType)
-            document.activeElement.blur()
-
-            EventService.getContent(searchType, streamType, normalizedSearch, pageNum).then((response) => {
-
-                //console.log(response)
-                if (response.error !== undefined) {
-                    console.error(response)
-                } else {
-                    this.sourceData = response
-                }
-            })
-        },
-        setSearchContent() {
-            this.search = 'Placeholder'
-            document.activeElement.blur()
-        },
-        prevPage() {
-            if (this.currPage > 1) {
-                this.currPage -= 1
-                this.searchContent(this.searchType, this.search, this.streamType, this.currPage)
-            }
-        },
-        nextPage() {
-            this.currPage += 1
-            this.searchContent(this.searchType, this.search, this.streamType, this.currPage)
-        },
-        resetPage() {
-            this.currPage = 1
-        },
         queryTag(tag) {
             this.resetPage()
             this.searchContent('tag', tag, 'video', this.currPage)
-            .then(() => {
-                this.searchType = "tag"
-                this.search = tag
-                this.streamType = "video"
-            })
         }
     },
 };

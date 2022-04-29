@@ -13,7 +13,12 @@ const routes = [
   {
     path: '/search',
     name: 'search',
-    component: Search
+    component: Search,
+    props: route => ({ 
+      searchContent: route.query.q,
+      queryType: route.query.qt,
+      streamType: route.query.st
+    })
   },
   {
     path: '/stream',

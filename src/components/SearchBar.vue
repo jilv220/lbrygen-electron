@@ -34,8 +34,20 @@ export default {
             if (from.name == 'search') {
                 this.searchContent = ''
             }
+            if (to.name == 'search') {
+                this.searchContent = this.$route.query.q
+                this.search.storeFilterInfo(this.$route.query.qt, this.$route.query.st)
+                this.performSearch(this.search.getSearchType, this.searchContent, this.search.getStreamType)
+            }
         }
-    }, 
+    },
+    mounted() {
+        if(this.$route.query.q) {
+            this.searchContent = this.$route.query.q
+            this.search.storeFilterInfo(this.$route.query.qt, this.$route.query.st)
+            this.performSearch(this.search.getSearchType, this.searchContent, this.search.getStreamType)
+        }
+    },
     methods: {
         async performSearch(searchType, searchContent, streamType) {
             
@@ -51,7 +63,12 @@ export default {
                 }
             }).then(() => {
                 this.$router.push({ 
-                    name: 'search'
+                    name: 'search',
+                    query: { 
+                        q:  searchContent,
+                        qt: searchType,
+                        st: streamType
+                    }
                 })
             })
         },

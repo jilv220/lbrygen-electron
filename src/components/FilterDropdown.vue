@@ -73,21 +73,40 @@ export default {
     },
     data() {
         return {
-            searchType: "tag",
-            streamType: "video",
+            searchType: 'tag',
+            streamType: 'video',
         };
+    },
+    mounted() {
+        this.search.storeFilterInfo(this.searchType, this.streamType)
     },
     watch: {
         searchType: function () {
-           this.search.storeFilterInfo(this.searchType, this.streamType)
+            this.search.storeFilterInfo(this.searchType, this.streamType)
         },
         streamType: function () {
             this.search.storeFilterInfo(this.searchType, this.streamType)
+        },
+        $route(to, from) {
+
+            console.log(to)
+            console.log(from)
+
+            if (from.name == 'search' && to.name == 'search') {
+                // Case 1 : from search to search
+                this.searchType = this.search.getSearchType
+                this.streamType = this.search.getStreamType
+            } else if (from.name == 'search') {
+                // Case 2 : from search to other route, reset filter options
+                this.searchType = 'tag'
+                this.streamType = 'video'
+            } else if (to.name == 'search') {
+                // Case 3 : from other route to search 
+                this.searchType = this.search.getSearchType
+                this.streamType = this.search.getStreamType
+            }
         }
-    },
-    mounted() {
-        this.search.initFilter()
-    },
+    }
 }
 </script>
 
