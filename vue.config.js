@@ -20,6 +20,9 @@ module.exports = {
         extraResources: [
           "static"
         ]
+      },
+      chainWebpackMainProcess: (config) => {
+        config.output.filename('background.js')
       }
     }
   }

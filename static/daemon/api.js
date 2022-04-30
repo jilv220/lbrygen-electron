@@ -59,6 +59,7 @@ app.get('/api/search', (req, res) => {
 
     let params = { method : 'claim_search',
                    params : { text : text === undefined ? undefined : text,
+                              fee_amount : '<=0',   // only serve free content
                               page : pageNum === undefined ? 1 : Number(pageNum),
                               page_size : pageSize == undefined ? PAGE_SIZE : Number(pageSize),
                               stream_type : [ streamType == undefined ? 'video' : streamType ],
