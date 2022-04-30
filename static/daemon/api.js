@@ -1,12 +1,15 @@
 const express = require('express')
+const compression = require('compression')
 const cors = require('cors')
 const axios = require('axios')
 const app = express()
 
 app.use(cors())
-const port = 5000;
+app.use(compression())
 
+// Api config
 const base = 'http://localhost'
+const port = process.env.PORT || 5000
 const lbryPort = 5279
 const lbryUrl = `${base}:${lbryPort}`
 const PAGE_SIZE = 20

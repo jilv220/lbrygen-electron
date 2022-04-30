@@ -1,7 +1,9 @@
 import axios from "axios"
 var qs = require('qs');
 
-const base_api = 'http://localhost:5000/api'
+const port = process.env.PORT || 5000
+const base_api = `http://localhost:${port}/api`
+
 export default {
 
   async getStreamByUrl(url) {
