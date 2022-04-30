@@ -19,9 +19,7 @@
 
                         <div id="stream-desc">
                             <div v-for="(line, index) in descList" :key="index">
-                                <a v-if='isHyperlink(line)' :href='line' class="text-green" target="_blank"> {{ line }}
-                                </a>
-                                <p v-else> {{ line }} </p>
+                                <span v-html="linkify(line)"></span>
                             </div>
                         </div>
 
@@ -36,8 +34,8 @@
                                 {{ item.name }}
                             </template>
                             <template v-slot:center-sub>
-                                <div v-if="item.signing_channel 
-                                        && item.signing_channel.value">
+                                <div v-if="item.signing_channel
+                                && item.signing_channel.value">
                                     {{ item.signing_channel.value.title }}
                                 </div>
                                 <div v-else> Anonymous </div>
@@ -65,7 +63,7 @@
 import EventService from "../services/EventService.js"
 import { useStreamStore } from "@/stores/StreamStore.js"
 import SearchItem from '@/components/SearchItem.vue'
-import { isHyperlink } from "@/utils/ReUtils.js"
+import { linkify } from "@/utils/ReUtils.js"
 
 export default {
     props: {
@@ -110,14 +108,14 @@ export default {
         })
     },
     methods: {
-        isHyperlink,
+        linkify,
         expandDesc() {
-            if(this.shouldExpand) {
-                document.getElementById('expand-btn').innerHTML = 'More'
+            if (this.shouldExpand) {
+                document.getElementById('expand-btn').innerHTML = 'Less'
                 document.getElementById('stream-desc').style.overflow = 'unset'
                 document.getElementById('stream-desc').style.maxHeight = 'unset'
             } else {
-                document.getElementById('expand-btn').innerHTML = 'Less'
+                document.getElementById('expand-btn').innerHTML = 'More'
                 document.getElementById('stream-desc').style.overflow = 'hidden'
                 document.getElementById('stream-desc').style.maxHeight = '10em'
             }
@@ -128,7 +126,7 @@ export default {
 </script>
 
 <style>
-p {
+span {
     display: block;
     margin-block-start: 1em;
     margin-block-end: 1em;

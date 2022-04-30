@@ -88,10 +88,6 @@ export default {
             this.search.storeFilterInfo(this.searchType, this.streamType)
         },
         $route(to, from) {
-
-            console.log(to)
-            console.log(from)
-
             if (from.name == 'search' && to.name == 'search') {
                 // Case 1 : from search to search
                 this.searchType = this.search.getSearchType

@@ -175,6 +175,10 @@ export default {
   @apply bg-black;
 }
 
+a {
+  @apply text-green !important
+}
+
 #navbar,
 #drawer-sidebar,
 #filter-area {
