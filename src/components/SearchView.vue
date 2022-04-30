@@ -1,5 +1,5 @@
 <template>
-    <div id="content" class="mx-10 pt-20">
+    <div id="content" class="mx-10 pt-20 overflow-hidden">
         <div v-if="sourceData && sourceData.result">
             <li v-for="item in sourceData.result.items" :key="item">
                 <SearchItem :thumbnail="item.value.thumbnail" 
@@ -52,12 +52,12 @@
 
         <!-- pagination -->
         <div v-if="sourceData && sourceData.result">
-            <p> {{ this.currPage }} </p>
-            <p class="flex-x-center">
-                <button class="btn bg-green hover:bg-green">First</button>
-                <button class="btn bg-green hover:bg-green">Prev</button>
-                <button class="btn bg-green hover:bg-green">Next</button>
-            </p>
+            <p class="font-heavy"> {{ this.currPage }} </p>
+            <div class="btn-group flex-x-center my-4">
+                <button class="btn" @click="firstPage()">First</button>
+                <button class="btn" @click="prevPage()">Prev</button>
+                <button class="btn" @click="nextPage()">Next</button>
+            </div>
         </div>
   </div>
 </template>
@@ -77,16 +77,15 @@ export default {
     props: {
         searchContent: String,
         queryType: String,
-        streamType: String
+        streamType: String,
+        currPage: String
     },
     data() {
         return {
             sourceData: '',
-            currPage: 1,
         };
     },
     mounted() {
-        //console.log(this.searchContent)
         this.sourceData = this.search.getSourceData
         this.search.$subscribe((mutation, state) => {
             
@@ -97,9 +96,39 @@ export default {
         })
     },
     methods: {
-        queryTag(tag) {
-            this.resetPage()
-            this.searchContent('tag', tag, 'video', this.currPage)
+        navigateToSearch() {
+            this.$router.push({ 
+                name: 'search',
+                query: { 
+                    q:  this.searchContent,
+                    qt: this.search.getSearchType,
+                    st: this.search.getStreamType,
+                    p: this.search.getCurrPage
+                }
+            })
+        },
+        firstPage() {
+            this.search.resetPage()
+            this.navigateToSearch()
+        },
+        prevPage() {
+            this.search.prevPage()
+            this.navigateToSearch()
+        },
+        nextPage() {
+            this.search.nextPage()
+            this.navigateToSearch()
+        },
+        queryTag(searchContent) {
+            this.$router.push({ 
+                name: 'search',
+                query: { 
+                    q:  searchContent,
+                    qt: 'tag',
+                    st: 'video',
+                    p: '1'
+                }
+            })
         }
     },
 };
@@ -112,6 +141,12 @@ li {
 
 button {
     cursor: pointer;
+}
+
+.btn-group .btn {
+  @apply bg-green !important;
+  @apply hover:bg-green-800 !important;
+  @apply text-white;
 }
 
 .badge {

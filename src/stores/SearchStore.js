@@ -4,7 +4,7 @@ let searchModel = {
     searchType: String,
     searchContent: String,
     streamType: String,
-    currPage: Number,
+    currPage: '1',
     sourceData: Object
 }
 
@@ -33,11 +33,20 @@ export const useSearchStore = defineStore (
                 this.search.streamType = 'video'
             },
             resetPage() {
-                this.search.currPage = 1   
+                this.search.currPage = '1' 
             },
-            storeAll(searchType, searchContent, streamType, currPage) {
+            nextPage() {
+                let newPage = Number(this.search.currPage) + 1 
+                this.search.currPage = newPage.toString()
+            },
+            prevPage() {
+                if (Number(this.search.currPage) > 1) {
+                    let newPage = Number(this.search.currPage) - 1 
+                    this.search.currPage = newPage.toString()
+                }
+            },
+            storeAll(searchType, streamType, currPage) {
                 this.search.searchType = searchType
-                this.search.searchContent = searchContent
                 this.search.streamType = streamType
                 this.search.currPage = currPage
             },

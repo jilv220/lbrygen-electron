@@ -8,7 +8,8 @@
             v-model="searchContent"
             placeholder="Search some contents..."
             autocomplete="off"
-            @keyup.enter="resetSearch(); performSearch(search.getSearchType, searchContent, search.getStreamType);"
+            @keyup.enter="performSearch(search.getSearchType, 
+                        searchContent, search.getStreamType, search.getCurrPage);"
         />
     </div>
 </template>
@@ -33,27 +34,31 @@ export default {
             // clear searchbar when leave searchView
             if (from.name == 'search') {
                 this.searchContent = ''
+                this.search.resetPage()
             }
             if (to.name == 'search') {
                 this.searchContent = this.$route.query.q
-                this.search.storeFilterInfo(this.$route.query.qt, this.$route.query.st)
-                this.performSearch(this.search.getSearchType, this.searchContent, this.search.getStreamType)
+                this.search.storeAll(this.$route.query.qt, this.$route.query.st, this.$route.query.p)
+                this.performSearch(this.search.getSearchType, this.searchContent, 
+                                    this.search.getStreamType, this.search.getCurrPage)
             }
         }
     },
     mounted() {
         if(this.$route.query.q) {
             this.searchContent = this.$route.query.q
-            this.search.storeFilterInfo(this.$route.query.qt, this.$route.query.st)
-            this.performSearch(this.search.getSearchType, this.searchContent, this.search.getStreamType)
+            this.search.storeAll(this.$route.query.qt, this.$route.query.st, this.$route.query.p)
+            this.performSearch(this.search.getSearchType, this.searchContent, 
+                                    this.search.getStreamType, this.search.getCurrPage)
         }
     },
     methods: {
-        async performSearch(searchType, searchContent, streamType) {
+        async performSearch(searchType, searchContent, streamType, currPage) {
             
             let normalizedSearch = Normalizer.run(searchContent, searchType)
 
-            EventService.getContent(searchType, streamType, normalizedSearch).then((response) => {
+            EventService.getContent(searchType, streamType, 
+                                    normalizedSearch, Number(currPage)).then((response) => {
 
                 //console.log(response)
                 if (response.error !== undefined) {
@@ -62,18 +67,17 @@ export default {
                     this.search.storeSourceData(response)
                 }
             }).then(() => {
+                
                 this.$router.push({ 
                     name: 'search',
                     query: { 
                         q:  searchContent,
                         qt: searchType,
-                        st: streamType
+                        st: streamType,
+                        p: currPage
                     }
                 })
             })
-        },
-        resetSearch() {
-            this.search.resetPage()
         },
     }
 }

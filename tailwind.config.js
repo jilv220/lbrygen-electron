@@ -17,13 +17,13 @@ module.exports = {
       'green-800': '#59a791',
       'yellow': '#ffc82c',
       'white': '#ffffff',
-      'white-sub' : '#e3e3e3',
+      'white-sub': '#e3e3e3',
       'black': '#1f1f22',
       'dark': '#121212',
       'gray-dark': '#273444',
       'gray': '#242424',
       'gray-light': '#27272a',
-      'gray-white':'#52525b'
+      'gray-white': '#52525b'
     },
     extend: {},
   },

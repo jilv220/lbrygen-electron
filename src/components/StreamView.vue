@@ -30,9 +30,11 @@
                 <div id="related-videos" class="card flex-1">
                     <li v-for="item in sourceData.result.items" :key="item">
                         <SearchItem :thumbnail="item.value.thumbnail" :streamUrl="item.short_url" :showAvatar="false">
+
                             <template v-slot:center>
                                 {{ item.name }}
                             </template>
+
                             <template v-slot:center-sub>
                                 <div v-if="item.signing_channel
                                 && item.signing_channel.value">
@@ -40,6 +42,7 @@
                                 </div>
                                 <div v-else> Anonymous </div>
                             </template>
+                            
                         </SearchItem>
                     </li>
                 </div>

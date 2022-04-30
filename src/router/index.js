@@ -17,7 +17,8 @@ const routes = [
     props: route => ({ 
       searchContent: route.query.q,
       queryType: route.query.qt,
-      streamType: route.query.st
+      streamType: route.query.st,
+      currPage: route.query.p
     })
   },
   {
@@ -28,7 +29,14 @@ const routes = [
   }
 ]
 
-export default createRouter({
+const router = createRouter({
   history: createWebHashHistory(),
   routes
 })
+
+router.beforeEach(() => {
+  // scroll to top on new route
+  window.scrollTo(0, 0)
+})
+
+export default router
