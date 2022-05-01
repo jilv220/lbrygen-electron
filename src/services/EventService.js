@@ -1,8 +1,14 @@
 import axios from "axios"
+import { IS_DEV, API_PROD } from '@/constants/env'
 var qs = require('qs');
 
-const port = process.env.PORT || 5000
-const base_api = `http://localhost:${port}/api`
+let base_api
+
+if (IS_DEV) {
+  base_api = `http://localhost:5000/api`
+} else {
+  base_api = API_PROD
+}
 
 export default {
 
